@@ -59,12 +59,12 @@ export const updateContact = (req, res, next) => {
   try {
     const { error } = updateContactSchema.validate(req.body);
     if (error) {
-      throw HttpError(400, error.message);
+      throw new HttpError(400, error.message);
     }
     const { contactId } = req.params;
     const result = contactsService.updateContact(contactId, req.body);
     if (!result) {
-      throw HttpError(404, `Contact with id=${contactId} not found`);
+      throw new HttpError(404, `Contact with id=${contactId} not found`);
     }
     res.json(result);
   } catch (error) {
