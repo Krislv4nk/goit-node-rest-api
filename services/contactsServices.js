@@ -11,18 +11,17 @@ export async function listContacts() {
 }
 
 
-export async function getContactById(contactId) {
+export async function getContactById(id) {
     const contacts = await listContacts();
-    const result = contacts.find((contact) => contact.id === contactId);
-    console.log(contactId);
+    const result = contacts.find((contact) => contact.id === id);
     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return result;
 }
 
 
-export async function removeContact(contactId) {
+export async function removeContact(id) {
     const contacts = await listContacts();
-    const index = contacts.findIndex((contact) => contact.id === contactId);
+    const index = contacts.findIndex((contact) => contact.id === id);
     if (index === -1) {
         return null;
     }
