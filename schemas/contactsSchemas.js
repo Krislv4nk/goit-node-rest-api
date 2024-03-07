@@ -5,10 +5,14 @@ export const createContactSchema = Joi.object({
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
 
+}).messages({
+    "any.required": "All fields are required"
 })
 
 export const updateContactSchema = Joi.object({
     name: Joi.string().min(3),
     email: Joi.string().email(),
     phone: Joi.string(),
-}).min(1);
+}).min(1).messages({
+    "any.required": 'Body must have at least one field'
+});

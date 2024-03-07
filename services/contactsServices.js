@@ -40,9 +40,9 @@ export async function addContact({name, email, phone}) {
     return newContact;
 }
 
-export async function updateContact (contactId, data) {
+export  const updateContact = async(id, data) => {
     const contacts = await listContacts();
-    const index = contacts.findIndex((contact) => contact.id === contactId);
+    const index = contacts.findIndex((contact) => contact.id === id);
     if (index === -1) {
         return null;
     }
