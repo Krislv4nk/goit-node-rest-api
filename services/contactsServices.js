@@ -32,9 +32,9 @@ export async function removeContact(contactId) {
 }
 
 
-export async function addContact({name, email, phone}) {
+export async function addContact(data) {
     const contacts = await listContacts();
-    const newContact = { id: nanoid(), name, email, phone };
+    const newContact = { id: nanoid(), ...data };
     contacts.push(newContact);
     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return newContact;
@@ -42,11 +42,12 @@ export async function addContact({name, email, phone}) {
 
 export  const updateContact = async(id, data) => {
     const contacts = await listContacts();
-    const index = contacts.findIndex((contact) => contact.id === id);
+    const index = contacts.findIndex(contact => contact.id === id);
     if (index === -1) {
         return null;
     }
     contacts[index] = { ...contacts[index], ...data };
     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return contacts[index];
+
 }

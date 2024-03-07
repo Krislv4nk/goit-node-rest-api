@@ -59,15 +59,14 @@ export const updateContact = async (req, res, next) => {
   try {
     const { error } = updateContactSchema.validate(req.body);
     if (error) {
-      throw new HttpError(400, error.message);
+      throw HttpError(400, error.message);
     }
     const { id } = req.params;
     const result = await contactsService.updateContact(id, req.body);
     if (!result) {
-      throw new HttpError(404, `Contact with id=${id} not found`);
-    } else {
-      res.status(200).json(result);
-    }
+      throw HttpError(404, `Contact with id=${id} not found`)
+    } 
+      res.json(result);
     
   } catch (error) {
     next(error);
