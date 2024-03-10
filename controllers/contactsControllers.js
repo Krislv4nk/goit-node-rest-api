@@ -30,7 +30,7 @@ export const getOneContact = async (req, res, next) => {
 export const deleteContact = async (req, res, next) => {
     try {
 const { id } = req.params;
-const result = await contactsService.removeContact(id);
+const result = await contactsService.deleteContactById(id);
 if (!result) {
   throw HttpError(404, `Contact with id=${id} not found`);
 }
@@ -72,3 +72,14 @@ export const updateContact = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateStatusContact = async (req, res, next) => {
+  try {
+    const { error } = updateContactSchema.validate(req.body);
+    if (error) {
+      throw HttpError(404, error.message);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
