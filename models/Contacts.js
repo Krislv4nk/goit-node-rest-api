@@ -16,7 +16,8 @@ const contactSchema = new Schema({
         type: Boolean,
         default: false,
       },
-});
+      
+}, { versionKey: false });
 
 contactSchema.post('save', handleSaveError);
 contactSchema.pre('findOneAndUpdate', setUpdateSettings);

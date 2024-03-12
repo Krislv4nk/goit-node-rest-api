@@ -34,10 +34,7 @@ const result = await contactsService.deleteContactById(id);
 if (!result) {
   throw HttpError(404, `Contact with id=${id} not found`);
 }
-res.status(200).json({
-  message: "Contact deleted successfully",
-  result
-});
+res.status(200).json(result);
     } catch (error) {
         next(error);
     }
@@ -51,10 +48,7 @@ export const createContact = async (req, res, next) => {
     }
     const result = await contactsService.addContact(req.body);
   console.log(result);
-    res.status(201).json(({
-      message: "Contact created successfully",
-      result
-    }));
+  res.status(201).json(result);
  }
  catch (error) {
     next(error);
@@ -72,11 +66,7 @@ export const updateContact = async (req, res, next) => {
     if (!result) {
       throw HttpError(404, `Contact with id=${id} not found`);
     }
-      res.json(({
-        message: "Contact updated successfully",
-        result
-      }));
-    
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
@@ -93,10 +83,7 @@ export const updateStatusContact = async (req, res, next) => {
     if (!result) {
       
     }
-    res.json(({
-      message: "Contact added to favorite successfully",
-      result
-    }))
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

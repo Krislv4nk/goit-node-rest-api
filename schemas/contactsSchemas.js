@@ -1,12 +1,19 @@
 import Joi from "joi";
 
 export const createContactSchema = Joi.object({
-    name: Joi.string().min(3).required(),
-    email: Joi.string().email().required(),
-    phone: Joi.string().required(),
+    name: Joi.string().min(3).required().messages({
+        'string.empty': 'Field "name" is required',
+        'any.required': 'Field "name" is required',
+    }),
+    email: Joi.string().email().required().messages({
+        'string.empty': 'Field "name" is required',
+        'any.required': 'Field "name" is required',
+    }),
+    phone: Joi.string().required().messages({
+        'string.empty': 'Field "name" is required',
+        'any.required': 'Field "name" is required',
+    }),
 favorite: Joi.boolean()
-}).messages({
-    "any.required": "All fields are required"
 })
 
 export const updateContactSchema = Joi.object({

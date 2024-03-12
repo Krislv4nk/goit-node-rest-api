@@ -21,7 +21,7 @@ contactsRouter.delete("/:id", isValidId, deleteContact);
 
 contactsRouter.post("/", validateBody(createContactSchema),  createContact);
 
-contactsRouter.put("/:id", validateBody(updateContactSchema),  updateContact);
+contactsRouter.put("/:id", validateBody(updateContactSchema),isValidId, updateContact);
 
 contactsRouter.patch("/:id/favorite", isValidId, updateContact);
 
