@@ -30,11 +30,11 @@ export const getOneContact = async (req, res, next) => {
 export const deleteContact = async (req, res, next) => {
     try {
 const { id } = req.params;
-const result = await contactsService.removeContact(id);
+const result = await contactsService.deleteContactById(id);
 if (!result) {
   throw HttpError(404, `Contact with id=${id} not found`);
 }
-res.status(200).json(result)
+res.status(200).json(result);
     } catch (error) {
         next(error);
     }
@@ -48,7 +48,7 @@ export const createContact = async (req, res, next) => {
     }
     const result = await contactsService.addContact(req.body);
   console.log(result);
-    res.status(201).json(result);
+  res.status(201).json(result);
  }
  catch (error) {
     next(error);
@@ -66,9 +66,25 @@ export const updateContact = async (req, res, next) => {
     if (!result) {
       throw HttpError(404, `Contact with id=${id} not found`);
     }
-      res.json(result);
-    
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
 };
+
+export const updateStatusContact = async (req, res, next) => {
+  try {
+    const { error } = updateContactSchema.validate(req.body);
+    if (error) {
+      throw HttpError(404, `Contact with id=${id} not found`);
+    }
+    const { id } = req.params;
+    const result = await contactsService.updateStatusContact(id, req.body);
+    if (!result) {
+      
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
