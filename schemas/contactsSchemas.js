@@ -6,12 +6,12 @@ export const createContactSchema = Joi.object({
         'any.required': 'Field "name" is required',
     }),
     email: Joi.string().email().required().messages({
-        'string.empty': 'Field "name" is required',
-        'any.required': 'Field "name" is required',
+        'string.empty': 'Field "email" is required',
+        'any.required': 'Field "email" is required',
     }),
     phone: Joi.string().required().messages({
-        'string.empty': 'Field "name" is required',
-        'any.required': 'Field "name" is required',
+        'string.empty': 'Field "phone" is required',
+        'any.required': 'Field "phone" is required',
     }),
 favorite: Joi.boolean()
 })
