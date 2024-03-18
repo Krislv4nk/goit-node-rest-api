@@ -17,6 +17,8 @@ export const getContactById = async (req, res, next) => {
     const {id} = req.params;
     const { _id: owner } = req.user;
     const result = await contactsService.getOne({_id: id, owner});
+   
+    console.log(result);
     if (!result) {
       throw HttpError(404, "Contact with id=${id} not found");
     }
@@ -43,10 +45,8 @@ export const deleteContact = async (req, res, next) => {
 
 export const createContact = async (req, res, next) => {
  try {
-  const {id} = req.params;
   const { _id: owner } = req.user;
  const result = await contactsService.addContact({...req.body, owner});
- console.log(owner);
   res.status(201).json(result);
  } catch (error) {
   next(error);
