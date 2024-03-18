@@ -19,13 +19,13 @@ const contactSchema = new Schema({
       owner: {
         type: Schema.Types.ObjectId,
         ref: 'user',
-      }  
+      }
 }, { versionKey: false });
 
 contactSchema.post('save', handleSaveError);
 contactSchema.pre('findOneAndUpdate', setUpdateSettings);
 contactSchema.post('findOneAndUpdate', handleSaveError);
 
-const Contact = model('Contact', contactSchema);
+const Contact = model('contact', contactSchema);
 
 export default Contact;

@@ -31,12 +31,22 @@ const signin = async(req, res )=> {
     const {_id: id} = user;
     const payload = {id, email};
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "23h"});
-    await authServices.updateToken({_id: id}, token);
-    res.json({token, user: {email, subscription: user.subscription}});
+    
+    res.json({token, user: {username: user.username, email, subscription: user.subscription}});
+}
+
+const getCurrent = async(req, res)=> {
+    const {username, email} = req.user;
+
+    res.json({
+        username,
+        email,
+    })
 }
 
 
 export default {
     signup: ctrlWrapper(signup),
     signin: ctrlWrapper(signin),
+    getCurrent: ctrlWrapper(getCurrent),
 };

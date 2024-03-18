@@ -4,10 +4,10 @@ import { findUser } from "../services/authServices.js";
 
 const {JWT_SECRET} = process.env;
 
-const authenticate = (req, res, next) => {
+const authenticate = (req, _, next) => {
        const {authorization} = req.headers;
        if (!authorization) {
-          return next (HttpError(401, "Not authorized"));
+          return next (HttpError(401, "Authorization header not found"));
        }
        const [bearer, token] = authorization.split(" ");
        if (bearer !== "Bearer") {
@@ -19,6 +19,9 @@ const authenticate = (req, res, next) => {
          if(!user) {
             return next(HttpError(401, "User not found"));
          }
+         // if(!user.token) {
+         //    return next(HttpError(401, "Not authorized"));
+         // }
          req.user = user;
          next();
        } catch (error) {
