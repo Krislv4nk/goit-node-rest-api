@@ -10,13 +10,15 @@ import authenticate from "../middlewares/authenticate.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", validateBody(userSignupSchema), authController.signup);
+authRouter.post("/register", validateBody(userSignupSchema), authController.signup);
 
-authRouter.post("/signin", validateBody(userSigninSchema), authController.signin);
+authRouter.post("/login", validateBody(userSigninSchema), authController.signin);
 
 authRouter.get("/current", authenticate, authController.getCurrent);
 
-authRouter.post("/signout", authenticate, authController.signout);
+authRouter.post("/logout", authenticate, authController.signout);
+
+authRouter.patch("/subscription", authenticate, authController.updateStatus);
 
 
 export default authRouter;

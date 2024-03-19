@@ -1,5 +1,5 @@
 import express from "express";
-import {getAllContacts,getContactById,deleteContact,createContact,updateContact,updateStatusContact} from "../controllers/contactsControllers.js";
+import {getAllContacts,getContactById,deleteContact,createContact,updateContact,updateStatusContact,getFavoriteContacts} from "../controllers/contactsControllers.js";
 import isValidId from "../middlewares/isValidId.js";
 import validateBody from "../helpers/validateBody.js";
 import authenticate from "../middlewares/authenticate.js";
@@ -21,5 +21,7 @@ contactsRouter.post("/", validateBody(createContactSchema),  createContact);
 contactsRouter.put("/:id", validateBody(updateContactSchema),isValidId, updateContact);
 
 contactsRouter.patch("/:id/favorite", isValidId,updateStatusContact);
+
+contactsRouter.get("/favorite", getFavoriteContacts);
 
 export default contactsRouter;

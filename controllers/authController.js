@@ -15,8 +15,10 @@ const {JWT_SECRET} = process.env;
         throw HttpError(409, "Email in use");
     }
     const newUser = await authServices.signup(req.body);
-    res.status(201).json({username: newUser.username,
-         email: newUser.email, subscription: newUser.subscription,});
+    res.status(201).json({
+    email: newUser.email,
+    subscription: newUser.subscription,
+  });
 }  
 const signin = async(req, res )=> {
     const {email, password} = req.body;
@@ -32,7 +34,7 @@ const signin = async(req, res )=> {
     const payload = {id, email};
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "23h"});
     await authServices.updateUser({_id: id}, {token});
-    res.json({token, user: {username: user.username, email, subscription: user.subscription}});
+    res.json({token, user: { email, subscription: user.subscription}});
 }
 
 const getCurrent = async(req, res)=> {
@@ -47,7 +49,14 @@ const getCurrent = async(req, res)=> {
 const signout = async(req, res)=> {
     const {_id: id} = req.user;
     await authServices.updateUser({_id: id}, {token: ""});
-    res.json({message: "Signout success"});
+    res.json({message: "No Content"});
+}
+
+const updateStatus = async(req, res)=> {
+    const {subscription} = req.user;
+    const {_id: id} = req.user;
+    await authServices.updateUser({_id: id}, {subscription});
+    res.json({subscription});
 }
 
 export default {
@@ -55,4 +64,5 @@ export default {
     signin: ctrlWrapper(signin),
     getCurrent: ctrlWrapper(getCurrent),
     signout: ctrlWrapper(signout),
+    updateStatus: ctrlWrapper(updateStatus),
 };
