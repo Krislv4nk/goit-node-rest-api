@@ -15,7 +15,7 @@ export const addContact = data => Contact.create(data);
 
 export const updateContact =  (id, data) => Contact.findByIdAndUpdate(id, data, {new: true});
    
-export const updateOneContact =  (filter, data) => Contact.findOneAndUpdate(filter, data, {new: true});
+export const updateOneContact =  (filter, data) => Contact.findOneAndUpdate(filter, data);
 
 export const updateStatusContact = (filter = {}) => Contact.find(filter, {favorite: true});
 

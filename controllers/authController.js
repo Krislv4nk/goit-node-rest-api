@@ -15,10 +15,10 @@ const {JWT_SECRET} = process.env;
         throw HttpError(409, "Email in use");
     }
     const newUser = await authServices.signup(req.body);
-    res.status(201).json({
+    res.status(201).json({user:{
     email: newUser.email,
     subscription: newUser.subscription,
-  });
+  }});
 }  
 const signin = async(req, res )=> {
     const {email, password} = req.body;
@@ -33,7 +33,9 @@ const signin = async(req, res )=> {
     const {_id: id} = user;
     const payload = {id, email};
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "23h"});
-    await authServices.updateUser({_id: id}, {token});
+
+    await authServices.updateUser({_id: id}, {token}, "Refreshed");
+
     res.json({token, user: { email, subscription: user.subscription}});
 }
 
@@ -42,14 +44,14 @@ const getCurrent = async(req, res)=> {
 
     res.json({
         username,
-        email,
+        email, subscription: req.user.subscription
     })
 }
 
 const signout = async(req, res)=> {
     const {_id: id} = req.user;
     await authServices.updateUser({_id: id}, {token: ""});
-    res.json({message: "No Content"});
+    res.status(204).json({message: "No Content"});
 }
 
 const updateStatus = async(req, res)=> {

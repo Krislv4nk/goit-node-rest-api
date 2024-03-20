@@ -4,7 +4,6 @@ import { emailRegexp } from "../helpers/user-constants.js";
 
 
 export const userSignupSchema = Joi.object({
-    username: Joi.string().required(),
     email: Joi.string().pattern(emailRegexp).required(),
     password: Joi.string().min(6).required(),
 })
