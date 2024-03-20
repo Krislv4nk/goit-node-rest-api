@@ -34,7 +34,7 @@ const signin = async(req, res )=> {
     const payload = {id, email};
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn: "23h"});
 
-    await authServices.updateUser({_id: id}, {token}, "Refreshed");
+    await authServices.updateUser({_id: id}, {token});
 
     res.json({token, user: { email, subscription: user.subscription}});
 }
