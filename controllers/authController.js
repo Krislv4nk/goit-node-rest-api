@@ -67,10 +67,15 @@ const updateStatus = async(req, res)=> {
 
 const updateAvatar = async(req, res)=> {
     const {_id: id} = req.user;
+    if (!req.file) {
+        return res.status(400).json({message: 'File not found, please add file'});
+    }
     const {path: tempUpload, originalname} = req.file;
+    const image = await Jimp.read(tempUpload);
+    image.resize(250, 250).write(tempUpload);
     const filename = `${id}_${originalname}`;
-    const uploadDir = path.join(avatarPath, filename);
-    await fs.rename(tempUpload, uploadDir);
+    const upload = path.join(avatarPath, filename);
+    await fs.rename(tempUpload, upload);
     const avatarURL = path.join("avatars", filename);
     await authServices.updateUser({_id: id}, {avatarURL});
     res.json({avatarURL});
